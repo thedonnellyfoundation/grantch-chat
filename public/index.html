@@ -1,47 +1,124 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Grantch Chat</title>
     <style>
-      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pontano+Sans&display=swap');
 
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+        body {
+            font-family: 'Pontano Sans', sans-serif;
+            background-color: white;
+            color: text;
+            font-size: 18px;
+        }
 
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
+        canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            padding: 0px;
+        }
+
+        #logo {
+            position: absolute;
+            left: 15px;
+            top: 10px;
+            margin-bottom: 0px;
+        }
+
+        #code {
+            position: absolute;;
+            margin-top: 0px;
+            top:140px;
+            left: 0px;
+            width: 100%;
+            height: 40px;
+            background-color: gold;
+            margin-bottom: 40px;
+        }
+
+        #use-code {
+            top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: red;
+        }
+
+        #messages-div {
+            max-height: 550px;
+            overflow:scroll;
+            word-wrap: break-word;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+        }
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+    #input {
+        width: 100%;
+        height: 30px;
+        border: none;
+        font-size: 30px;
+        font-family: 'Pontano Sans', sans-serif;
+    }
+
+    input {
+        outline: none;
+    }
+
     </style>
   </head>
   <body>
-    <ul id="messages"></ul>
+    <canvas id="canvas"></canvas>
+    <img id="logo" src="grantch-chat-logo.png" alt="">
+
+    <div id="code">
+        <marquee id="use-code">Use code "MAXLIKESBALLS" to get 20% off your next purchase on GRANTCH.COM</marquee>
+    </div>
+    <br><br><br><br><br><br><br><br>
+    Enter a username & password to sign in. If the username does not exist an account with the password you type will be created. <br>
+    Do not use a personal password as none of them are encrypted. Use show password if you're setting it for the first time. If you forget the password then fuck you. <br> <br>
+
+    <form id="login-form" action="">
+        username:
+        <input id="username" type="text">
+        password:
+        <input id="password" type="password">
+        <button onclick="login()">log in</button>
+    </form>
+
+    Show Password:
+    <input id="show-password" type="checkbox">
+
+    <br>
+    <span id="status">Status: Not Signed in</span>
+
+    <br>
+    Name Colour: <input id="name-color" type="color" value="#03fc77"> <br>
+    Message Colour: <input id="message-color" type="color" value="black">
+
+    <div id="messages-div">
+        <ul id="messages"></ul>
+    </div>
+
+
     <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
+      <input id="input" autocomplete="off" placeholder="Type your message here..."/>
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="networking-client.js"></script>
+    <script src="space.js"></script>
 <script>
-  var socket = io();
-
-var form = document.getElementById('form');
-var input = document.getElementById('input');
-
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
-  if (input.value) {
-    socket.emit('chat message', input.value);
-    input.value = '';
-  }
-});
-
-socket.on('chat message', function(msg) {
-    var item = document.createElement('li');
-    item.textContent = msg;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-});
 
 
 </script>
